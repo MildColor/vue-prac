@@ -5,17 +5,13 @@ const props = defineProps(["textWithBlanks", "onDrop"]);
 const pTag = ref(null);
 const blankSpan = ref();
 
-const add = (el) => {
-  blankSpan.value.push(el);
-};
-
 onMounted(() => {
-  console.log("pTag", pTag.value);
-  console.log("blankSpan", blankSpan.value);
+  //   console.log("pTag", pTag.value);
+  //   console.log("blankSpan", blankSpan.value);
 });
 
 watch(blankSpan.value, () => {
-  console.log("blankSpan", blankSpan.value);
+  //   console.log("blankSpan", blankSpan.value);
 });
 </script>
 <template>

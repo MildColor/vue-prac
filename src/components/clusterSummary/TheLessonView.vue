@@ -48,8 +48,9 @@ watch(answerOrder.value, () => {
       <img class="your-image-class" src="your-image-path" alt="Description" />
     </div>
 
-    <DnDAnswer :text-with-blanks="textWithBlanks" :onDrop="onDrop"></DnDAnswer>
-    <DnDWords :word-list="draggableWords" :onDrag="onDrag"></DnDWords>
+    <div></div>
+    <!-- <DnDAnswer :text-with-blanks="textWithBlanks" :onDrop="onDrop"></DnDAnswer>
+    <DnDWords :word-list="draggableWords" :onDrag="onDrag"></DnDWords> -->
   </section>
 </template>
 <style scoped>
