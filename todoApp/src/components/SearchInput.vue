@@ -7,7 +7,7 @@ const { handleSubmit } = store
 </script>
 <template>
   <form @submit.prevent="handleSubmit">
-    <input type="text" v-model="todo" placeholder="TODO 입력하기" class="" />
+    <input type="text" v-model="todo" placeholder="검색어 입력하기" class="" />
     <button type="submit">입력</button>
   </form>
 </template>
