@@ -7,15 +7,10 @@ import { onMounted, onUnmounted, ref, watch } from 'vue'
 import HomePokeListCard from '@/components/Home/HomePokeListCard.vue'
 import type { PokeList } from '@/\btypes/pokemon'
 import { useObserver } from '@/composable/useObserver'
+import GlobalModal from '@/components/Modal/GlobalModal.vue'
 
 const paginationParams = ref({ offset: 0, limit: 30 })
-// const { lastItem } = useObserver(() => {
-//   console.log('last')
-//   paginationParams.value = {
-//     ...paginationParams.value,
-//     offset: paginationParams.value.limit + 30
-//   }
-// })
+
 const { state, isReady, isLoading, execute } = useAsyncState(
   async (args) => {
     try {
@@ -32,23 +27,25 @@ const { state, isReady, isLoading, execute } = useAsyncState(
 )
 
 const increaseOffset = () => {
-  paginationParams.value = {
-    ...paginationParams.value,
-    offset: paginationParams.value.offset + 30
+  if (state.value.count > paginationParams.value.offset) {
+    paginationParams.value = {
+      ...paginationParams.value,
+      offset: paginationParams.value.offset + 30
+    }
   }
 }
 const decreaseOffest = () => {
-  paginationParams.value = {
-    ...paginationParams.value,
-    offset: paginationParams.value.offset - 30
+  if (paginationParams.value.offset > 29) {
+    paginationParams.value = {
+      ...paginationParams.value,
+      offset: paginationParams.value.offset - 30
+    }
   }
 }
 
 const handlePrevPage = () => {
-  if (paginationParams.value.offset > 29) {
-    decreaseOffest()
-    execute(0, { ...paginationParams.value })
-  }
+  decreaseOffest()
+  execute(0, { ...paginationParams.value })
 }
 const handleNextPage = () => {
   increaseOffset()
@@ -81,6 +78,8 @@ watch(paginationParams, () => {
         <button class="btn-pagination" @click="handleNextPage">></button>
       </div>
     </main>
+
+    <global-modal></global-modal>
   </default-layout>
 </template>
 
