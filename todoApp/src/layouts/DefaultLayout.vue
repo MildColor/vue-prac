@@ -1,16 +1,11 @@
-<script lang="ts" setup>
-import TheHeader from '@/components/TheHeader.vue'
-
-import SearchInput from '@/components/SearchInput.vue'
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="default-layout">
-    <the-header>
-      <search-input />
-    </the-header>
+    <slot name="header"></slot>
 
     <slot></slot>
+    <slot name="footer"></slot>
   </div>
 </template>
 

@@ -1,8 +1,18 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import HomePokeListCard from '@/components/Home/HomePokeListCard.vue'
+
+defineProps(['pokeList'])
+</script>
 <template>
   <section class="poke-list-container">
     <ul class="poke-list">
-      <slot name="card"></slot>
+      <home-poke-list-card
+        v-for="pokemon in pokeList.results"
+        :key="pokemon.name"
+        :pokemon-url="pokemon.url"
+        :pokemon-name="pokemon.name"
+      >
+      </home-poke-list-card>
     </ul>
   </section>
 </template>

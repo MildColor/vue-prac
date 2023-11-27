@@ -26,8 +26,6 @@ const { state, isReady, isLoading } = useAsyncState(
 
 const handleClickDetailModal = () => {
   openGlobalModal(PokeDetailModal, { ...state.value })
-
-  console.log(state.value)
 }
 </script>
 <template>

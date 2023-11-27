@@ -1,12 +1,15 @@
 <script lang="ts" setup>
+import type { PokemonDetail } from '@/\btypes/pokemon'
 import { useModalStore } from '@/stores/modal'
 import { storeToRefs } from 'pinia'
 import { watch } from 'vue'
+import { typeColors } from '@/constants/typeColors'
+import StatsRadarChart from '@/components/Chart/StatsRadarChart.vue'
 
 const modalState = useModalStore()
 const { closeGlobalModal } = modalState
 
-const { innerComponentProps } = storeToRefs(modalState)
+const { innerComponentProps } = storeToRefs<PokemonDetail | any>(modalState)
 
 console.log('props', innerComponentProps.value)
 
@@ -27,15 +30,29 @@ watch(innerComponentProps.value, () => {
         <path d="M0 0H65C70.5228 0 75 4.47715 75 10V53L32.5 23.5L0 0Z" fill="#CE66FF" />
       </svg>
     </button>
-    <p class="content__pokemon-name">어니부기</p>
+    <p class="content__pokemon-name">{{ innerComponentProps.name }}</p>
     <div class="content__pokemon-container">
-      <img
-        class="content__pokemon-img"
-        v-if="innerComponentProps"
-        :src="innerComponentProps?.sprites?.front_default"
-        alt="pokemon"
-      />
-      <div class="content__pokemon-stats"></div>
+      <div class="content__pokemon-wrapper">
+        <img
+          class="content__pokemon-img"
+          v-if="innerComponentProps"
+          :src="innerComponentProps?.sprites?.front_default"
+          alt="pokemon"
+        />
+        <ul class="content__poketmon-types">
+          <li
+            v-for="type in innerComponentProps?.types"
+            :key="type.type.name"
+            :style="`background-color: ${typeColors[type.type.name]}`"
+            class="content__poketmon-types-item"
+          >
+            {{ type.type.name }}
+          </li>
+        </ul>
+      </div>
+      <div class="content__pokemon-stats">
+        <stats-radar-chart :stats="innerComponentProps.stats"></stats-radar-chart>
+      </div>
     </div>
   </div>
 </template>
@@ -45,8 +62,8 @@ watch(innerComponentProps.value, () => {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 500px;
-  height: 400px;
+  width: 550px;
+  height: 450px;
   background-color: white;
   border-radius: 10px;
   padding: 20px;
@@ -69,7 +86,14 @@ watch(innerComponentProps.value, () => {
   display: flex;
   align-items: center;
 }
-
+.content__pokemon-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  gap: 20px;
+  height: 100%;
+}
 .content__pokemon-img {
   border: 1px solid rgba(0, 0, 0, 0.1);
   min-width: 150px;
@@ -81,9 +105,21 @@ watch(innerComponentProps.value, () => {
 }
 
 .content__pokemon-stats {
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+}
+
+.content__poketmon-types {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.content__poketmon-types-item {
+  padding: 5px;
+  border-radius: 5px;
+  margin: auto 0;
 }
 </style>

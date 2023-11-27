@@ -1,15 +1,27 @@
 <script lang="ts" setup>
-import { useTodoStore } from '@/stores/todos'
+import { pokemonApis } from '@/server/pokemons'
+import { useAsyncState } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-const store = useTodoStore()
-const { todo } = storeToRefs(store)
-const { handleSubmit } = store
+import { ref } from 'vue'
+
+const pokemonName = ref('')
+// const { state, isReady, isLoading, execute } = useAsyncState(
+//   async (args) => {
+//     try {
+//       const response = await pokemonApis.getPokemons(args)
+//       return response.data
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   },
+//   // 초기상태
+//   {},
+//   // 옵션
+//   {}
+// )
 </script>
 <template>
-  <form @submit.prevent="handleSubmit">
-    <input type="text" v-model="todo" placeholder="검색어 입력하기" class="" />
-    <button type="submit">입력</button>
-  </form>
+  <input type="text" v-model="pokemonName" placeholder="검색어 입력하기" class="" />
 </template>
 
 <style></style>
